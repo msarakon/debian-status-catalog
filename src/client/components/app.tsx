@@ -1,5 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-const App = () => (<div>Hello world</div>);
+const App = () => {
+
+    useEffect(() => {
+        
+    }, []);
+   
+    return (<div>Hello world</div>)
+};
 
 export default App;

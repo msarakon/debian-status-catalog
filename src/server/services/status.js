@@ -9,7 +9,7 @@ const parseProperty = (text, label) => {
 const parseDependencies = (text) => {
     const dependsString = parseProperty(text, 'Depends');
     if (dependsString) {
-        const dependencies = dependsString.split(', ')
+        const dependencies = dependsString.split(/ ?[,|\|] /)
             .map(dependency => dependency.replace(/ \(.*\)/, ''));
         return [ ...new Set(dependencies) ]; // remove possible duplicates
     }
