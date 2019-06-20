@@ -2,7 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 const config = {
-    entry: ['./src/index.tsx'],
+    entry: ['./src/client/index.tsx'],
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.json']
     },
