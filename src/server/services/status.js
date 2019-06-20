@@ -28,13 +28,20 @@ const parsePackage = (text) => {
         dependants
     };
 }
- 
+
+const setDependants = (packages) => {
+    packages.forEach(package =>
+        package.dependants = packages.filter(
+            p => p.dependencies.includes(package.name)).map(p => p.name)
+    );
+};
+
 exports.readStatus = (res) => {
     fs.readFile(FILE_PATH, (error, data) => {
         if (error) throw error;
-        const packages = [];
-        const paragraphs = data.toString().split('\r\n\r\n');
-        paragraphs.forEach(paragraph => packages.push(parsePackage(paragraph)));
+        const packageStrings = data.toString().split('\r\n\r\n');
+        const packages = packageStrings.map(string => parsePackage(string));
+        setDependants(packages);
         res.status(200).type('application/json').send(JSON.stringify(packages));
     });
 };
