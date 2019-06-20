@@ -2,14 +2,15 @@ const fs = require('fs');
 const FILE_PATH = './src/server/data/status';
 
 const parseProperty = (text, label) => {
-    const matches = text.match(new RegExp(label + ': (.*)'));
+    const matches = text.match(new RegExp(label + ': (.*(\r\n .*)*)'));
     return matches ? matches[1] : '';
 }
 
 const parseDependencies = (text) => {
     const dependsString = parseProperty(text, 'Depends');
     if (dependsString) {
-        const dependencies = dependsString.split(', ').map(dependency => dependency.replace(/ \(.*\)/, ''));
+        const dependencies = dependsString.split(', ')
+            .map(dependency => dependency.replace(/ \(.*\)/, ''));
         return [ ...new Set(dependencies) ]; // remove possible duplicates
     }
     return [];
