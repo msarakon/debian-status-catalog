@@ -4,12 +4,12 @@ import { Package } from '../../types/package';
 
 const FILE_PATH = './src/server/data/status';
 
-const parseProperty = (text: string, label: string) => {
+const parseProperty = (text: string, label: string): string => {
     const matches = text.match(new RegExp(label + ': (.*(\r\n .*)*)'));
     return matches ? matches[1] : '';
 };
 
-const parseDependencies = (text: string) => {
+const parseDependencies = (text: string): string[] => {
     const dependsString = parseProperty(text, 'Depends');
     if (dependsString) {
         const dependencies = dependsString
@@ -20,7 +20,7 @@ const parseDependencies = (text: string) => {
     return [];
 };
 
-const parsePackage = (text: string) => {
+const parsePackage = (text: string): Package => {
     const name = parseProperty(text, 'Package');
     const description = parseProperty(text, 'Description');
     const dependencies = parseDependencies(text);
@@ -42,16 +42,20 @@ const setDependants = (packages: Package[]) => {
     );
 };
 
+const parsePackages = (data: string): Package[] => {
+    const packageStrings = data.split('\r\n\r\n');
+    const packages = packageStrings.map(string => parsePackage(string));
+    setDependants(packages);
+    return packages;
+};
+
 const readStatus = (res: Response) => {
     fs.readFile(FILE_PATH, (error: Error, data: Object) => {
         if (error) throw error;
-        const packageStrings = data.toString().split('\r\n\r\n');
-        const packages = packageStrings.map(string => parsePackage(string));
-        setDependants(packages);
         res.status(200)
             .type('application/json')
-            .send(JSON.stringify(packages));
+            .send(JSON.stringify(parsePackages(data.toString())));
     });
 };
 
-export { readStatus };
+export { readStatus, parsePackages };
