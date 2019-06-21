@@ -6,7 +6,13 @@ const PackageInfo = (props: PackageInfoProps) =>
     (
         <div>
             <h2>{props.package.name}</h2>
-            <div>{props.package.description}</div>
+            <div>
+                {
+                    props.package.description.split('\n').map((item, key) =>
+                        <div key={key}>{item}</div> 
+                    )
+                }
+            </div>
             <h3>Dependencies</h3>
             <PackageList packages={props.package.dependencies} findByName={props.findByName} />
             <h3>Dependants</h3>

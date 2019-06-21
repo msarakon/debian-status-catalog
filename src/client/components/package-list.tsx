@@ -6,7 +6,7 @@ const PackageList = (props: PackageListProps) =>
         <div>
             {
                 props.packages.sort().map((name: string) =>
-                    <div>
+                    <div key={name}>
                         {
                             props.findByName(name)
                             ? <Link to={'/' + name}>{name}</Link>
