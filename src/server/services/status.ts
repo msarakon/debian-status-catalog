@@ -12,9 +12,10 @@ const parseProperty = (text: string, label: string) => {
 const parseDependencies = (text: string) => {
     const dependsString = parseProperty(text, 'Depends');
     if (dependsString) {
-        const dependencies = dependsString.split(/ ?[,|\|] /)
+        const dependencies = dependsString
+            .split(/ ?[,|\|] /)
             .map(dependency => dependency.replace(/ \(.*\)/, ''));
-        return [ ...new Set(dependencies) ]; // remove possible duplicates
+        return [...new Set(dependencies)]; // remove possible duplicates
     }
     return [];
 };
@@ -28,14 +29,16 @@ const parsePackage = (text: string) => {
         name,
         description,
         dependencies,
-        dependants
+        dependants,
     };
 };
 
 const setDependants = (packages: Package[]) => {
-    packages.forEach((pcgk: Package) =>
-        pcgk.dependants = packages.filter(
-            p => p.dependencies.includes(pcgk.name)).map(p => p.name)
+    packages.forEach(
+        (pcgk: Package) =>
+            (pcgk.dependants = packages
+                .filter(p => p.dependencies.includes(pcgk.name))
+                .map(p => p.name))
     );
 };
 
@@ -45,7 +48,9 @@ const readStatus = (res: Response) => {
         const packageStrings = data.toString().split('\r\n\r\n');
         const packages = packageStrings.map(string => parsePackage(string));
         setDependants(packages);
-        res.status(200).type('application/json').send(JSON.stringify(packages));
+        res.status(200)
+            .type('application/json')
+            .send(JSON.stringify(packages));
     });
 };
 

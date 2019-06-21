@@ -6,24 +6,39 @@ import PackageInfo from './package-info';
 import { Package } from '../../types/package';
 
 const App = () => {
-    const [ packages, setPackages ] = useState([]);
+    const [packages, setPackages] = useState([]);
 
     useEffect(() => {
         statusService.getAll().then(packages => setPackages(packages));
     }, []);
 
-    const packageByName = (name: string) => packages.find((p: Package) => p.name === name);
+    const packageByName = (name: string) =>
+        packages.find((p: Package) => p.name === name);
 
     return (
         <div>
             <h1>Debian Status Catalog</h1>
             <BrowserRouter>
-                <Route exact path='/' render={() =>
-                    <PackageList packages={packages.map(p => p.name)} findByName={packageByName} />
-                } />
-                <Route exact path='/:package' render={({ match }) =>
-                    <PackageInfo package={packageByName(match.params.package)} findByName={packageByName} />
-                } />
+                <Route
+                    exact
+                    path="/"
+                    render={() => (
+                        <PackageList
+                            packages={packages.map(p => p.name)}
+                            findByName={packageByName}
+                        />
+                    )}
+                />
+                <Route
+                    exact
+                    path="/:package"
+                    render={({ match }) => (
+                        <PackageInfo
+                            package={packageByName(match.params.package)}
+                            findByName={packageByName}
+                        />
+                    )}
+                />
             </BrowserRouter>
         </div>
     );
