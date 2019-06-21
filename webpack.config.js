@@ -7,11 +7,11 @@ const config = {
         extensions: ['.ts', '.tsx', '.js', '.json']
     },
     output: {
-        path: path.resolve(__dirname, 'build'),
+        path: path.resolve(__dirname, 'public'),
         filename: 'main.js'
     },
     devServer: {
-        contentBase: path.resolve(__dirname, 'build'),
+        contentBase: path.resolve(__dirname, 'public'),
         compress: true,
         port: 3000
     },

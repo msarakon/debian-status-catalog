@@ -1,8 +1,13 @@
 {
     "compilerOptions": {
         "target": "es6",
+        "outDir": "build",
         "esModuleInterop": true,
         "moduleResolution": "node",
         "jsx": "react"
-    }
+    },
+    "exclude": [
+        "src/client",
+        "node_modules"
+    ]
 }

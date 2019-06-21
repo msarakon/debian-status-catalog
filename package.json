@@ -9,10 +9,12 @@
   "author": "Minna Sarakontu <minna.sarakontu@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --mode=development --open",
-    "build": "webpack --mode=production",
-    "watch": "npm run build && nodemon ./src/server/index.js",
-    "serve": "npm run build && node ./src/server/index.js"
+    "build:client": "webpack --mode=production",
+    "build:server": "tsc",
+    "build": "npm run build:client && npm run build:server",
+    "watch:client": "webpack-dev-server --mode=development --open",
+    "watch:server": "npm run build && nodemon -r esm ./build/server/index.js",
+    "serve": "npm run build && node -r esm ./build/server/index.js"
   },
   "dependencies": {
     "@types/react": "^16.8.21",
@@ -24,6 +26,7 @@
     "typescript": "^3.5.2"
   },
   "devDependencies": {
+    "esm": "^3.2.25",
     "express": "^4.17.1",
     "html-webpack-plugin": "^3.2.0",
     "nodemon": "^1.19.1",
