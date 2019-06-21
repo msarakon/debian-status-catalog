@@ -19,10 +19,10 @@ const App = () => {
             <h1>Debian Status Catalog</h1>
             <BrowserRouter>
                 <Route exact path='/' render={() =>
-                    <PackageList packages={packages.map(p => p.name)} />
+                    <PackageList packages={packages.map(p => p.name)} findByName={packageByName} />
                 } />
                 <Route exact path='/:package' render={({ match }) =>
-                    <PackageInfo package={packageByName(match.params.package)} />
+                    <PackageInfo package={packageByName(match.params.package)} findByName={packageByName} />
                 } />
             </BrowserRouter>
         </div>

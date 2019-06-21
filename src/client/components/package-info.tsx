@@ -8,14 +8,15 @@ const PackageInfo = (props: PackageInfoProps) =>
             <h2>{props.package.name}</h2>
             <div>{props.package.description}</div>
             <h3>Dependencies</h3>
-            <PackageList packages={props.package.dependencies} />
+            <PackageList packages={props.package.dependencies} findByName={props.findByName} />
             <h3>Dependants</h3>
-            <PackageList packages={props.package.dependants} />
+            <PackageList packages={props.package.dependants} findByName={props.findByName} />
         </div>
     );
 
 interface PackageInfoProps {
-    package: Package
+    package: Package,
+    findByName: Function
 }
 
 export default PackageInfo;

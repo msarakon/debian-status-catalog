@@ -6,14 +6,21 @@ const PackageList = (props: PackageListProps) =>
         <div>
             {
                 props.packages.sort().map((name: string) =>
-                    <div><Link to={'/' + name}>{name}</Link></div>
+                    <div>
+                        {
+                            props.findByName(name)
+                            ? <Link to={'/' + name}>{name}</Link>
+                            : <span>{name}</span>
+                        }
+                    </div>
                 )
             }
         </div>
     );
 
 interface PackageListProps {
-    packages: string[]
+    packages: string[],
+    findByName: Function
 }
 
 export default PackageList;
