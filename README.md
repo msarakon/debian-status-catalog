@@ -10,5 +10,6 @@ Lists installed packages and their dependencies &amp; dependants.
 ### How to run
 
 1. Install Node.js
-2. Run `npm run serve` in the root
-3. Go to http://localhost:8080
+2. Install dependencies with `npm install`
+3. Run `npm run serve` in the root
+4. Go to http://localhost:8080
