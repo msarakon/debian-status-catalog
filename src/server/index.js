@@ -5,7 +5,7 @@ const PORT = 8080;
 
 app.use(express.static('build'));
 
-app.get('/status', (req, res) => Status.readStatus(res));
+app.get('/api/status', (req, res) => Status.readStatus(res));
 
 app.listen(PORT);
 
