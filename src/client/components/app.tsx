@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
 import statusService from '../services/status';
+import PackageList from './package-list';
+import PackageInfo from './package-info';
+import { Package } from '../../types/package';
 
 const App = () => {
     const [ packages, setPackages ] = useState([]);
@@ -8,15 +12,19 @@ const App = () => {
         statusService.getAll().then(packages => setPackages(packages));
     }, []);
 
-    const alphabeticalOrder = (p1, p2) =>
-        p1.name > p2.name ? 1 : p1.name < p2.name ? -1 : 0;
-   
+    const packageByName = (name: string) => packages.find((p: Package) => p.name === name);
+
     return (
         <div>
-            {
-                packages.sort(alphabeticalOrder).map(p =>
-                    <div>{ p.name }</div>)
-            }
+            <h1>Debian Status Catalog</h1>
+            <BrowserRouter>
+                <Route exact path='/' render={() =>
+                    <PackageList packages={packages.map(p => p.name)} />
+                } />
+                <Route exact path='/:package' render={({ match }) =>
+                    <PackageInfo package={packageByName(match.params.package)} />
+                } />
+            </BrowserRouter>
         </div>
     );
 };
