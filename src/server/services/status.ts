@@ -44,7 +44,7 @@ const setDependants = (packages: Package[]) => {
 
 const parsePackages = (data: string): Package[] => {
     const packageStrings = data.split('\r\n\r\n');
-    const packages = packageStrings.map(string => parsePackage(string));
+    const packages = packageStrings.map((str: string) => parsePackage(str));
     setDependants(packages);
     return packages;
 };
