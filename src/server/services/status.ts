@@ -43,7 +43,7 @@ const setDependants = (packages: Package[]) => {
 };
 
 const parsePackages = (data: string): Package[] => {
-    const packageStrings = data.replace('\r', '').split('\n\n');
+    const packageStrings = data.replace(/\r/g, '').split('\n\n');
     const packages = packageStrings.map((str: string) => parsePackage(str));
     setDependants(packages);
     return packages;
