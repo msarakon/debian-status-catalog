@@ -5,7 +5,7 @@ import { Package } from '../../types/package';
 const FILE_PATH = './src/server/data/status';
 
 const parseProperty = (text: string, label: string): string => {
-    const matches = text.match(new RegExp(label + ': (.*(\r\n .*)*)'));
+    const matches = text.match(new RegExp(label + ': (.*(\n .*)*)'));
     return matches ? matches[1] : '';
 };
 
@@ -43,7 +43,7 @@ const setDependants = (packages: Package[]) => {
 };
 
 const parsePackages = (data: string): Package[] => {
-    const packageStrings = data.split('\r\n\r\n');
+    const packageStrings = data.replace('\r', '').split('\n\n');
     const packages = packageStrings.map((str: string) => parsePackage(str));
     setDependants(packages);
     return packages;
